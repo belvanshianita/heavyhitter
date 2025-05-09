@@ -23,12 +23,6 @@ scripts=(
   "https://raw.githubusercontent.com/naksh-07/Automate/refs/heads/main/gh_installer.sh"
   "https://raw.githubusercontent.com/naksh-07/Automate/refs/heads/main/megen.sh"
   "https://raw.githubusercontent.com/naksh-07/Automate/refs/heads/main/mega.sh"
-  "https://raw.githubusercontent.com/naksh-07/Automate/refs/heads/main/mega_downloader.sh"
-  "https://raw.githubusercontent.com/naksh-07/Automate/refs/heads/main/ognode.sh"
-  "https://raw.githubusercontent.com/naksh-07/Automate/refs/heads/main/pipe.sh"
-  "https://raw.githubusercontent.com/naksh-07/Automate/refs/heads/main/gaia_checker.sh"
-  "https://raw.githubusercontent.com/naksh-07/Automate/refs/heads/main/gaiacloud.sh"
-  "https://raw.githubusercontent.com/naksh-07/Automate/refs/heads/main/restart_gaianet.sh"
 )
 
 echo "📥 Downloading all scripts..."
@@ -97,42 +91,7 @@ for pair in "${tasks[@]}"; do
   run_if_env_exists "$envfile" "$script"
 done
 
-#check if gaianet archive exists in mega only then run gaiacloud and restartgaia
-echo "running gaia_checker.sh"
 
-bash gaia_checker.sh
-
-echo "🎉 All downloaded scripts executed!"
-# Check if Gbot.env exists in the current directory
-if [ -f "Gbot.env" ]; then
-    echo "✅ Gbot.env found! Running Gbot.sh script..."
-    curl -sSLO https://raw.githubusercontent.com/naksh-07/Automate/refs/heads/main/Gbot.sh && bash Gbot.sh
-else
-    echo "⚠️ Gbot.env not found! Skipping Gbot.sh script..."
-fi
-
-#pull image for browser
-docker pull  rohan014233/thorium
-
-#run script for browser either restores it or makes new 
-curl -sSLO https://raw.githubusercontent.com/naksh-07/Browser-Backup-Restore/refs/heads/main/restore.sh && bash restore.sh
-
-
-# Stop containers from restarting automatically
-for cid in $(docker ps -q); do
-  docker update --restart=no "$cid"
-done
-
-# Stop all running Docker containers
-echo "🛑 Stopping all running Docker containers..."
-docker stop $(docker ps -q)
-
-# Bonus thoda attitude mein
-echo "💥 All containers stopped. Shanti mil gayi!"
-
-# Start Codespace Tracker
-cd /workspaces/heavyhitter/codespace-tracker
-./tracker_setup.sh
 
 
 
